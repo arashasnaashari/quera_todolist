@@ -19,7 +19,9 @@ btn_add.addEventListener("click", () => {
     title: title_input.value,
     desc: desc_input.value,
     isdone: false,
-    id: `${desc_input.value}_${desc_input.value}_${id}`,
+    id: `${desc_input.value.split(" ").join("")}_${desc_input.value
+      .split(" ")
+      .join("")}_${id}`,
   };
 
   if (!title_input.value || !desc_input.value) {
