@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <div class="modal">
+        <div class="modal_content">
+          <section class="form">
+            <label for="title_update">Title</label>
+            <input type="text" name="title_update" class="input_title_update" />
+
+            <label for="desc_update">Desc</label>
+            <input type="text" name="desc_update" class="input_desc_update" />
+
+            <button class="btn_update">Update</button>
+          </section>
+        </div>
+      </div>
+      <section class="sec_1">
+        <section class="form">
+          <label for="title">Title</label>
+          <input type="text" name="title" class="input_title" />
+
+          <label for="desc">Desc</label>
+          <input type="text" name="desc" class="input_desc" />
+
+          <button class="btn_add">Save</button>
+        </section>
+      </section>
+      <section class="sec_2">
+        <div class="card_row"></div>
+      </section>
+    </main>
+    <section class="alert_success">
+      <h2>Success !</h2>
+      <span class="ix_1">×</span>
+    </section>
+    <section class="alert_erorr">
+      <h2>Inputs must be full !</h2>
+      <span class="ix">×</span>
+    </section>
+    <script src="./script.js"></script>
+  </body>
+</html>
