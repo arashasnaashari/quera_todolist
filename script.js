@@ -13,6 +13,13 @@ const ix_1 = document.querySelector(".ix_1");
 
 let cards = [];
 
+if (JSON.parse(localStorage.getItem("cards"))) {
+  cards = JSON.parse(localStorage.getItem("cards"));
+  reRender();
+} else {
+  console.log("there is no cards");
+}
+
 btn_add.addEventListener("click", () => {
   let id = Math.floor(Math.random() * 300) + 1;
   let newCards = {
@@ -28,6 +35,7 @@ btn_add.addEventListener("click", () => {
     showAlertNotFull();
   } else {
     cards.push(newCards);
+    localStorage.setItem("cards", JSON.stringify(cards));
     showSuccess();
     title_input.value = "";
     desc_input.value = "";
@@ -36,11 +44,19 @@ btn_add.addEventListener("click", () => {
 });
 function reRender() {
   card_row.innerHTML = "";
-  cards.map((e) => {
-    card_row.insertAdjacentHTML(
-      "beforeend",
-      `<div class="card" data-id="${e.id}" data-isdone="${e.isdone}"> <header class="card_head"> <h1>${e.title}</h1> <h1 class="isdone_chek" id="${e.id}"></h1> </header> <p>${e.desc}</p> <footer class="card_footer"> <button class="btn_delete" onClick="remove(this)">delete</button> <button class="btn_edit" onClick="edit(this)">edit</button> <button class="btn_done" onClick="done(this)">doing</button> </footer> </div>`
-    );
+
+  JSON.parse(localStorage.getItem("cards")).map((e) => {
+    if (e.isdone) {
+      card_row.insertAdjacentHTML(
+        "beforeend",
+        `<div class="card" data-id="${e.id}" data-isdone="${e.isdone}"> <header class="card_head"> <h1>${e.title}</h1> <h1 class="isdone_chek" id="${e.id}">✅</h1> </header> <p>${e.desc}</p> <footer class="card_footer"> <button class="btn_delete" onClick="remove(this)">delete</button> <button class="btn_edit" onClick="edit(this)">edit</button> <button class="btn_done" onClick="done(this)">done</button> </footer> </div>`
+      );
+    } else {
+      card_row.insertAdjacentHTML(
+        "beforeend",
+        `<div class="card" data-id="${e.id}" data-isdone="${e.isdone}"> <header class="card_head"> <h1>${e.title}</h1> <h1 class="isdone_chek" id="${e.id}"></h1> </header> <p>${e.desc}</p> <footer class="card_footer"> <button class="btn_delete" onClick="remove(this)">delete</button> <button class="btn_edit" onClick="edit(this)">edit</button> <button class="btn_done" onClick="done(this)">doing</button> </footer> </div>`
+      );
+    }
   });
 }
 function showAlertNotFull() {
@@ -60,6 +76,7 @@ function remove(e) {
   cards = cards.filter(
     (c) => c.id !== e.parentElement.parentElement.dataset.id
   );
+  localStorage.setItem("cards", JSON.stringify(cards));
   reRender();
 }
 function edit(e) {
@@ -83,6 +100,7 @@ function edit(e) {
         }
       });
       showSuccess();
+      localStorage.setItem("cards", JSON.stringify(cards));
       reRender();
       modal.style.display = "none";
     }
@@ -99,12 +117,14 @@ function done(e) {
     document.querySelector(
       `#${e.parentElement.parentElement.dataset.id}`
     ).innerHTML = "";
+    localStorage.setItem("cards", JSON.stringify(cards));
   } else {
     e.innerHTML = "done";
     cardState.isdone = true;
     document.querySelector(
       `#${e.parentElement.parentElement.dataset.id}`
     ).innerHTML = "✅";
+    localStorage.setItem("cards", JSON.stringify(cards));
   }
 }
 window.onclick = (e) => {
